@@ -3,12 +3,23 @@ class ButtonField extends Field{
   boolean isClicked;
   color colClicked;
   
+  ButtonField() {
+    
+  }
+  
+  ButtonField(PVector pos, PVector size, color col, String text, int textSize, color colClicked) {
+    super(pos, size, col, text, textSize);
+    this.colClicked = colClicked;
+  }
+  
   void display() {
     super.display();
   }
   
   void clicked() {
-    
+    if(mouseX > pos.x && mouseX < pos.x + size.x && mouseY > pos.y && mouseY < pos.y + size.y) {
+      isClicked = !isClicked;
+    }
   }
   
 }
