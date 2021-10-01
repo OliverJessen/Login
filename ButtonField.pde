@@ -13,7 +13,12 @@ class ButtonField extends Field{
   }
   
   void display() {
-    super.display();
+    if(isClicked) {
+      super.display(colClicked);
+    }
+    else {
+      super.display();
+    }
   }
   
   void clicked() {

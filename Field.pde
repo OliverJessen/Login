@@ -19,6 +19,10 @@ class Field {
   }
   
   void display() {
+    display(col);
+  }
+  
+  void display(color col) {
     stroke(0);
     fill(col);
     rect(pos.x, pos.y, size.x, size.y);
@@ -26,5 +30,4 @@ class Field {
     textSize(textSize);
     text(text, pos.x + textSize/2, pos.y + size.y - textSize*0.65);
   }
-  
 }
