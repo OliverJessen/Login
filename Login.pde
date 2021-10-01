@@ -11,13 +11,13 @@ void setup() {
 }
 
 void draw() {
-  for(ButtonField b : buttonFields) {
+  for (ButtonField b : buttonFields) {
     b.display();
   }
 }
 
 void mousePressed() {
-  for(ButtonField b : buttonFields) {
+  for (ButtonField b : buttonFields) {
     b.clicked();
   }
 }
@@ -26,11 +26,12 @@ void keyPressed() {
   if (key == 'b') {
     getData();
   }
+  if (key =='v') {
+    //addAccount();
+  }
 }
 
 void getData() {
-
-
   if (database.connect()) {
     database.query("SELECT ID, Name, Mail, Pass FROM User");
 
@@ -40,21 +41,19 @@ void getData() {
         ", \t Name: " + database.getString("Name") + 
         ", \t Mail: " + database.getString("Mail") + 
         ", \t Password: " + database.getString("Pass")
-      );
+        );
     }
   } else {
     println("Database failed to connect");
   }
 }
 
-void addAccount(){
-    if (database.connect()) {
-    database.query("SELECT ID, Name, Mail, Pass FROM User");
+/*void addAccount() {
+  if (database.connect()) {
+    database.query("INSERT INTO User ID Name Mail Pass ");
 
-    while (database.next()) {
-      
-    }
   } else {
     println("Database failed to connect");
   }
 }
+*/
