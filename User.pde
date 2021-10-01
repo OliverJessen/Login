@@ -1,7 +1,7 @@
 class User {
   
-  String mail;
   String name;
+  String mail;
   String pass;
   
   void getData(String column) {
