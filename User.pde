@@ -7,5 +7,4 @@ class User {
   void getData(String column) {
     
   }
-  
 }
