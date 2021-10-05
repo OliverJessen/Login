@@ -1,7 +1,11 @@
 import de.bezier.data.sql.*;
 
 ArrayList<ButtonField> buttonFields = new ArrayList<ButtonField>();
+<<<<<<< HEAD
 ArrayList<InputField> inputFields = new ArrayList<InputField>();
+=======
+SQLite database;
+>>>>>>> 4b3ab13a3578bb80b3af483c5e585043e9927efe
 
 void setup() {
   size(1000, 500);
@@ -9,10 +13,11 @@ void setup() {
   InputField i = new InputField(new PVector(200, 200), new PVector(270, 150), color(255), "Enter stuff here", 25, color(200));
   inputFields.add(i);
   buttonFields.add(b);
+  database = new SQLite(this, "Users.sqlite");
 }
 
 void draw() {
-  for(ButtonField b : buttonFields) {
+  for (ButtonField b : buttonFields) {
     b.display();
   }
   
@@ -22,7 +27,7 @@ void draw() {
 }
 
 void mousePressed() {
-  for(ButtonField b : buttonFields) {
+  for (ButtonField b : buttonFields) {
     b.clicked();
   }
   for(InputField i : inputFields) {
@@ -31,7 +36,43 @@ void mousePressed() {
 }
 
 void keyPressed() {
+<<<<<<< HEAD
   for(InputField i : inputFields){
     i.addInput(key);
   } 
+=======
+  if (key == 'b') {
+    getData();
+  }
+  if (key =='v') {
+    //addAccount();
+  }
 }
+
+void getData() {
+  if (database.connect()) {
+    database.query("SELECT ID, Name, Mail, Pass FROM User");
+
+    while (database.next()) {
+      println(
+        "ID: " + database.getInt("ID") + 
+        ", \t Name: " + database.getString("Name") + 
+        ", \t Mail: " + database.getString("Mail") + 
+        ", \t Password: " + database.getString("Pass")
+        );
+    }
+  } else {
+    println("Database failed to connect");
+  }
+}
+
+/*void addAccount() {
+  if (database.connect()) {
+    database.query("INSERT INTO User ID Name Mail Pass ");
+
+  } else {
+    println("Database failed to connect");
+  }
+>>>>>>> 4b3ab13a3578bb80b3af483c5e585043e9927efe
+}
+*/
