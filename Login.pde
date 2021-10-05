@@ -1,11 +1,8 @@
 import de.bezier.data.sql.*;
 
 ArrayList<ButtonField> buttonFields = new ArrayList<ButtonField>();
-<<<<<<< HEAD
 ArrayList<InputField> inputFields = new ArrayList<InputField>();
-=======
 SQLite database;
->>>>>>> 4b3ab13a3578bb80b3af483c5e585043e9927efe
 
 void setup() {
   size(1000, 500);
@@ -36,11 +33,9 @@ void mousePressed() {
 }
 
 void keyPressed() {
-<<<<<<< HEAD
   for(InputField i : inputFields){
     i.addInput(key);
   } 
-=======
   if (key == 'b') {
     getData();
   }
@@ -72,7 +67,5 @@ void getData() {
 
   } else {
     println("Database failed to connect");
-  }
->>>>>>> 4b3ab13a3578bb80b3af483c5e585043e9927efe
 }
 */
