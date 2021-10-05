@@ -23,11 +23,11 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  if (key == 'b') {
+  if (key == 'd'||key == 'D') {
     getData();
   }
-  if (key =='v') {
-    //addAccount();
+  if (key =='a' ||key == 'A') {
+    addAccount();
   }
 }
 
@@ -48,12 +48,10 @@ void getData() {
   }
 }
 
-/*void addAccount() {
+void addAccount() {
   if (database.connect()) {
-    database.query("INSERT INTO User ID Name Mail Pass ");
-
+    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '3','Uaggauga','anotherMail@gmail.com', 'evenBetterPassword');");
   } else {
     println("Database failed to connect");
   }
 }
-*/
