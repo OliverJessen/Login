@@ -14,7 +14,7 @@ class ButtonField extends Field{
   
   void display() {
     if(isClicked) {
-      super.display(colClicked);
+      super.display(colClicked, text);
     }
     else {
       super.display();

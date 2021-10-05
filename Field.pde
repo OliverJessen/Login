@@ -19,10 +19,10 @@ class Field {
   }
   
   void display() {
-    display(col);
+    display(col, text);
   }
   
-  void display(color col) {
+  void display(color col, String text) {
     stroke(0);
     fill(col);
     rect(pos.x, pos.y, size.x, size.y);
