@@ -71,3 +71,4 @@ void addAccount() {
   } else {
     println("Database failed to connect");
 }
+}
