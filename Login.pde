@@ -17,9 +17,9 @@ void draw() {
   for (ButtonField b : buttonFields) {
     b.display();
   }
-  
-  for(InputField i : inputFields){
-    i.display(); 
+
+  for (InputField i : inputFields) {
+    i.display();
   }
 }
 
@@ -27,48 +27,46 @@ void mousePressed() {
   for (ButtonField b : buttonFields) {
     b.clicked();
   }
-  for(InputField i : inputFields) {
+  for (InputField i : inputFields) {
     i.clicked();
   }
 }
 
 void keyPressed() {
-<<<<<<< HEAD
-  if (key == 'd'||key == 'D') {
-=======
-  for(InputField i : inputFields){
-    i.addInput(key);
-  } 
-  if (key == 'b') {
->>>>>>> f8a2533bb0507c193dafba295d14513587491e6d
-    getData();
-  }
-  if (key =='a' ||key == 'A') {
-    addAccount();
-  }
-}
-
-void getData() {
-  if (database.connect()) {
-    database.query("SELECT ID, Name, Mail, Pass FROM User");
-
-    while (database.next()) {
-      println(
-        "ID: " + database.getInt("ID") + 
-        ", \t Name: " + database.getString("Name") + 
-        ", \t Mail: " + database.getString("Mail") + 
-        ", \t Password: " + database.getString("Pass")
-        );
+    if (key == 'd'||key == 'D') {
+      for (InputField i : inputFields) {
+      i.addInput(key);
+    } 
+    if (key == 'b') {
+        getData();
     }
-  } else {
-    println("Database failed to connect");
+    if (key =='a' ||key == 'A') {
+      addAccount();
+    }
   }
 }
 
-void addAccount() {
-  if (database.connect()) {
-    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '3','Uaggauga','anotherMail@gmail.com', 'evenBetterPassword');");
-  } else {
-    println("Database failed to connect");
-}
-}
+  void getData() {
+    if (database.connect()) {
+      database.query("SELECT ID, Name, Mail, Pass FROM User");
+
+      while (database.next()) {
+        println(
+          "ID: " + database.getInt("ID") + 
+          ", \t Name: " + database.getString("Name") + 
+          ", \t Mail: " + database.getString("Mail") + 
+          ", \t Password: " + database.getString("Pass")
+          );
+      }
+    } else {
+      println("Database failed to connect");
+    }
+  }
+
+  void addAccount() {
+    if (database.connect()) {
+      database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '3','Uaggauga','anotherMail@gmail.com', 'evenBetterPassword');");
+    } else {
+      println("Database failed to connect");
+    }
+  }
