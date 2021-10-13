@@ -33,7 +33,6 @@ void mousePressed() {
 }
 
 void keyPressed() {
-    if (key == 'd'||key == 'D') {
       for (InputField i : inputFields) {
       i.addInput(key);
     } 
@@ -43,7 +42,7 @@ void keyPressed() {
     if (key =='a' ||key == 'A') {
       addAccount();
     }
-  }
+  
 }
 
   void getData() {
