@@ -51,6 +51,12 @@ void keyPressed() {
   for (InputField i : inputFields) {
     i.addInput(key);
   }
+
+    if (keyCode == BACKSPACE )
+    for (InputField i : inputFields) {
+      i.removeInput();
+    } 
+  
 }
 
 void getData() {
