@@ -10,9 +10,10 @@ ButtonField login;
 
 void setup() {
   size(1000, 500);
-  inputFields.add(new InputField(new PVector(200, 200), new PVector(270, 50), color(255), "Username", 25, color(200)));
-  inputFields.add(new InputField(new PVector(200, 255), new PVector(270, 50), color(255), "Password", 25, color(200)));
-  
+  inputFields.add(new InputField(new PVector(200, 150), new PVector(270, 50), color(255), "Username", 25, color(200)));
+  inputFields.add(new InputField(new PVector(200, 205), new PVector(270, 50), color(255), "Password", 25, color(200)));
+  inputFields.add(new InputField(new PVector(200, 260), new PVector(270, 50), color(255), "Email", 25, color(200)));
+
   createAccount = new ButtonField(new PVector(200, 400), new PVector(200, 50), color(255), "Create Account", 25, color(150));
   login = new ButtonField(new PVector(500, 400), new PVector(170, 50), color(255), "Login", 25, color(150));
 
@@ -22,7 +23,7 @@ void setup() {
 void draw() {
   createAccount.display();
   login.display();
-  
+
   for (InputField i : inputFields) {
     i.display();
   }
@@ -34,16 +35,15 @@ void mousePressed() {
   for (InputField i : inputFields) {
     i.clicked();
   }
-  
-  if(createAccount.isClicked){
-    addAccount();
+
+  if (createAccount.isClicked) {
+    //addAccount();
     createAccount.isClicked = false;
   }
-  if(login.isClicked){
+  if (login.isClicked) {
     login();
     login.isClicked = false;
   }
-  
 }
 
 void keyPressed() {
@@ -51,20 +51,22 @@ void keyPressed() {
     for (InputField i : inputFields) {
       i.addInput(key);
     }
-    if (keyCode == BACKSPACE )
+    if (keyCode == BACKSPACE ) {
       for (InputField i : inputFields) {
-        i.removeInput();
+        if (i.isClicked) {
+          i.removeInput();
+        }
       }
+    }
   }
 }
 
-void login(){
-
+void login() {
 }
 
-void addAccount() {
+void addAccount(String username, String password, String email) {
   if (database.connect()) {
-    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '3','Uaggauga','anotherMail@gmail.com', 'evenBetterPassword');");
+    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( 'id','"+username+"','"+email+"', '"+password+"');");
   } else {
     println("Database failed to connect");
   }
