@@ -3,7 +3,6 @@ import de.bezier.data.sql.*;
 ArrayList<InputField> inputFields = new ArrayList<InputField>();
 
 SQLite database;
-int page = 0;
 
 ButtonField createAccount;
 ButtonField login;
