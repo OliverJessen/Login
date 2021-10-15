@@ -2,22 +2,17 @@ import de.bezier.data.sql.*;
 
 ArrayList<ButtonField> buttonFields = new ArrayList<ButtonField>();
 ArrayList<InputField> inputFields = new ArrayList<InputField>();
-SQLite database;
 
+SQLite database;
+int page = 0;
 void setup() {
   size(1000, 500);
-
-  ButtonField b = new ButtonField(new PVector(100, 100), new PVector(170, 50), color(255), "I am button", 25, color(150));
-  ButtonField g = new ButtonField(new PVector(300, 100), new PVector(170, 50), color(255), "Get data", 25, color(150));
-  ButtonField a = new ButtonField(new PVector(500, 100), new PVector(170, 50), color(255), "Add account", 25, color(150));
-  InputField username = new InputField(new PVector(200, 200), new PVector(270, 50), color(255), "Enter stuff here", 25, color(200));
-  InputField password = new InputField(new PVector(200, 255), new PVector(270, 50), color(255), "Enter stuff here", 25, color(200));
-
-  inputFields.add(username);
-  inputFields.add(password);
-  buttonFields.add(b);
-  buttonFields.add(g);
-  buttonFields.add(a);
+  inputFields.add(new InputField(new PVector(200, 200), new PVector(270, 50), color(255), "Username", 25, color(200)));
+  inputFields.add(new InputField(new PVector(200, 255), new PVector(270, 50), color(255), "Password", 25, color(200)));
+  
+  buttonFields.add(new ButtonField(new PVector(100, 100), new PVector(170, 50), color(255), "I am button", 25, color(150)));
+  buttonFields.add(new ButtonField(new PVector(300, 100), new PVector(170, 50), color(255), "Get data", 25, color(150)));
+  buttonFields.add(new ButtonField(new PVector(500, 100), new PVector(170, 50), color(255), "Add account", 25, color(150)));
 
   database = new SQLite(this, "Users.sqlite");
 }
