@@ -37,7 +37,16 @@ void mousePressed() {
   }
 
   if (createAccount.isClicked) {
-    //addAccount();
+    String tempUsername = "";
+    String tempPassword = "";
+    String tempEmail = "";
+    for (InputField i : inputFields) {
+      if(i.text == "Username"){tempUsername = i.input;}
+      if(i.text == "Password"){tempPassword = i.input;}
+      if(i.text == "Email"){tempEmail = i.input;}
+      println(tempEmail);
+    }
+    addAccount(tempUsername, tempPassword, tempEmail);
     createAccount.isClicked = false;
   }
   if (login.isClicked) {
@@ -66,7 +75,7 @@ void login() {
 
 void addAccount(String username, String password, String email) {
   if (database.connect()) {
-    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( 'id','"+username+"','"+email+"', '"+password+"');");
+    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '35','"+username+"','"+email+"', '"+password+"');");
   } else {
     println("Database failed to connect");
   }
