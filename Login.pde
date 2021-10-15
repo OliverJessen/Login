@@ -29,20 +29,21 @@ void draw() {
 }
 
 void mousePressed() {
-  for (ButtonField b : buttonFields) {
-    b.clicked();
-  }
+  createAccount.clicked();
+  login.clicked();
   for (InputField i : inputFields) {
     i.clicked();
   }
-  for (ButtonField g : buttonFields) {
-    g.clicked();
-    getData();
-  }
-  for (ButtonField a : buttonFields) {
-    a.clicked();
+  
+  if(createAccount.isClicked){
     addAccount();
+    createAccount.isClicked = false;
   }
+  if(login.isClicked){
+    login();
+    login.isClicked = false;
+  }
+  
 }
 
 void keyPressed() {
@@ -54,6 +55,18 @@ void keyPressed() {
       for (InputField i : inputFields) {
         i.removeInput();
       }
+  }
+}
+
+void login(){
+
+}
+
+void addAccount() {
+  if (database.connect()) {
+    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '3','Uaggauga','anotherMail@gmail.com', 'evenBetterPassword');");
+  } else {
+    println("Database failed to connect");
   }
 }
 
@@ -69,14 +82,6 @@ void getData() {
         ", \t Password: " + database.getString("Pass")
         );
     }
-  } else {
-    println("Database failed to connect");
-  }
-}
-
-void addAccount() {
-  if (database.connect()) {
-    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '3','Uaggauga','anotherMail@gmail.com', 'evenBetterPassword');");
   } else {
     println("Database failed to connect");
   }
