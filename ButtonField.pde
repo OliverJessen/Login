@@ -24,6 +24,8 @@ class ButtonField extends Field{
   void clicked() {
     if(mouseX > pos.x && mouseX < pos.x + size.x && mouseY > pos.y && mouseY < pos.y + size.y) {
       isClicked = !isClicked;
+    }else{
+      isClicked = false;
     }
   }
   
