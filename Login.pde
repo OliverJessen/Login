@@ -1,27 +1,28 @@
 import de.bezier.data.sql.*;
 
-ArrayList<ButtonField> buttonFields = new ArrayList<ButtonField>();
 ArrayList<InputField> inputFields = new ArrayList<InputField>();
 
 SQLite database;
 int page = 0;
+
+ButtonField createAccount;
+ButtonField login;
+
 void setup() {
   size(1000, 500);
   inputFields.add(new InputField(new PVector(200, 200), new PVector(270, 50), color(255), "Username", 25, color(200)));
   inputFields.add(new InputField(new PVector(200, 255), new PVector(270, 50), color(255), "Password", 25, color(200)));
   
-  buttonFields.add(new ButtonField(new PVector(100, 100), new PVector(170, 50), color(255), "I am button", 25, color(150)));
-  buttonFields.add(new ButtonField(new PVector(300, 100), new PVector(170, 50), color(255), "Get data", 25, color(150)));
-  buttonFields.add(new ButtonField(new PVector(500, 100), new PVector(170, 50), color(255), "Add account", 25, color(150)));
+  createAccount = new ButtonField(new PVector(200, 400), new PVector(200, 50), color(255), "Create Account", 25, color(150));
+  login = new ButtonField(new PVector(500, 400), new PVector(170, 50), color(255), "Login", 25, color(150));
 
   database = new SQLite(this, "Users.sqlite");
 }
 
 void draw() {
-  for (ButtonField b : buttonFields) {
-    b.display();
-  }
-
+  createAccount.display();
+  login.display();
+  
   for (InputField i : inputFields) {
     i.display();
   }
