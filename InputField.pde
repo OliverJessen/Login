@@ -9,6 +9,7 @@ class InputField extends ButtonField {
   String input = "";
 
   void display() {
+    println(input);
     color col;
     String text;
     
@@ -25,12 +26,19 @@ class InputField extends ButtonField {
   }
 
   void addInput(char c) {
+    
     if (isClicked) {
       if(c != BACKSPACE || c != SHIFT)
         input += c;
       if(c == BACKSPACE)
         removeInput();
     }
+    input.replace("AltGr","");
+   /*for(int i = 0;i<=input.length();i++){
+      if(input.charAt(i) == '?'){
+        input.replace(charAt(i),"");
+      }
+    }*/
   }
 
   void removeInput() {
