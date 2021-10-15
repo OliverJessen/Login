@@ -6,17 +6,19 @@ SQLite database;
 
 void setup() {
   size(1000, 500);
-  
+
   ButtonField b = new ButtonField(new PVector(100, 100), new PVector(170, 50), color(255), "I am button", 25, color(150));
   ButtonField g = new ButtonField(new PVector(300, 100), new PVector(170, 50), color(255), "Get data", 25, color(150));
   ButtonField a = new ButtonField(new PVector(500, 100), new PVector(170, 50), color(255), "Add account", 25, color(150));
-  InputField i = new InputField(new PVector(200, 200), new PVector(270, 150), color(255), "Enter stuff here", 25, color(200));
-  
-  inputFields.add(i);
+  InputField username = new InputField(new PVector(200, 200), new PVector(270, 50), color(255), "Enter stuff here", 25, color(200));
+  InputField password = new InputField(new PVector(200, 255), new PVector(270, 50), color(255), "Enter stuff here", 25, color(200));
+
+  inputFields.add(username);
+  inputFields.add(password);
   buttonFields.add(b);
   buttonFields.add(g);
   buttonFields.add(a);
-  
+
   database = new SQLite(this, "Users.sqlite");
 }
 
@@ -41,22 +43,22 @@ void mousePressed() {
     g.clicked();
     getData();
   }
-  for (ButtonField a : buttonFields){
+  for (ButtonField a : buttonFields) {
     a.clicked();
     addAccount();
   }
 }
 
 void keyPressed() {
-  for (InputField i : inputFields) {
-    i.addInput(key);
-  }
-
-    if (keyCode == BACKSPACE )
+  if (keyCode != SHIFT) {
     for (InputField i : inputFields) {
-      i.removeInput();
-    } 
-  
+      i.addInput(key);
+    }
+    if (keyCode == BACKSPACE )
+      for (InputField i : inputFields) {
+        i.removeInput();
+      }
+  }
 }
 
 void getData() {
