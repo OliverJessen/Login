@@ -47,7 +47,7 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  if (keyCode != SHIFT) {
+  if (keyCode != SHIFT && keyCode != ALT) {
     for (InputField i : inputFields) {
       i.addInput(key);
     }
