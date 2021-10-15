@@ -1,100 +1,163 @@
-import de.bezier.data.sql.*;
-
-ArrayList<InputField> inputFields = new ArrayList<InputField>();
+import de.bezier.data.sql.*; //<>//
 
 SQLite database;
 
-ButtonField createAccount;
-ButtonField login;
+ArrayList<Field> fields = new ArrayList<Field>();
+InputField username = new InputField(new PVector(200, 150), new PVector(580, 50), color(255), "Username", 25, color(200));
+InputField password = new InputField(new PVector(200, 205), new PVector(580, 50), color(255), "Password", 25, color(200), true);
+InputField mail = new InputField(new PVector(200, 260), new PVector(580, 50), color(255), "Email", 25, color(200));
+ButtonField money = new ButtonField(new PVector(200, 315), new PVector(580, 50), color(255), "Balance", 25, color(150));
+ButtonField create = new ButtonField(new PVector(200, 400), new PVector(220, 50), color(255), "Create Account", 25, color(150));
+ButtonField login = new ButtonField(new PVector(450, 400), new PVector(150, 50), color(255), "Login", 25, color(150));
+ButtonField save = new ButtonField(new PVector(630, 400), new PVector(150, 50), color(255), "Save Data", 25, color(150));
+
+User currentUser = new User(username.input, mail.input);
 
 void setup() {
   size(1000, 500);
-    background(30,30,40,40);
-  inputFields.add(new InputField(new PVector(200, 150), new PVector(270, 50), color(255), "Username", 25, color(200)));
-  inputFields.add(new InputField(new PVector(200, 205), new PVector(270, 50), color(255), "Password", 25, color(200)));
-  inputFields.add(new InputField(new PVector(200, 260), new PVector(270, 50), color(255), "Email", 25, color(200)));
 
-  createAccount = new ButtonField(new PVector(200, 400), new PVector(200, 50), color(255), "Create Account", 25, color(150));
-  login = new ButtonField(new PVector(500, 400), new PVector(170, 50), color(255), "Login", 25, color(150));
+  fields.add(username);
+  fields.add(password);
+  fields.add(mail);
+  fields.add(money);
+  fields.add(create);
+  fields.add(login);
+  fields.add(save);
 
   database = new SQLite(this, "Users.sqlite");
 }
 
 void draw() {
-  clear();
-  createAccount.display();
+  background(30, 30, 40, 40);
+
+  create.display();
   login.display();
 
-  for (InputField i : inputFields) {
+  for (Field i : fields) {
     i.display();
   }
 }
 
-void mousePressed() {
-  createAccount.clicked();
-  login.clicked();
-  for (InputField i : inputFields) {
-    i.clicked();
+boolean updateUserData() {
+  if (currentUser.ID == 0) {
+    println("User is not logged in");
+    return false;
   }
 
-  if (createAccount.isClicked) {
-    String tempUsername = "";
-    String tempPassword = "";
-    String tempEmail = "";
-    for (InputField i : inputFields) {
-      if(i.text == "Username"){tempUsername = i.input;}
-      if(i.text == "Password"){tempPassword = i.input;}
-      if(i.text == "Email"){tempEmail = i.input;}
-      println(tempEmail);
+  return true;
+}
+
+void mousePressed() {
+  for (Field f : fields)
+    if (f instanceof ButtonField) { //Marcus: "instanceof" betyder at vi tjekker om "f" er et objekt af klassen "ButtonField"
+      ButtonField b = (ButtonField)f;
+      b.clicked();
     }
-    addAccount(tempUsername, tempPassword, tempEmail);
-    createAccount.isClicked = false;
+
+  if (create.isClicked) {
+    if (username.input.length() != 0 && password.input.length() != 0 && mail.input.length() != 0 && isMailUnique())
+      addAccount(username.input, password.input, mail.input);
+    create.isClicked = false;
   }
   if (login.isClicked) {
     login();
     login.isClicked = false;
   }
+  if (money.isClicked) {
+    if (currentUser.ID != 0)
+      money.text = String.valueOf(Integer.parseInt(money.text) + 1);
+    money.isClicked = false;
+  }
+  if (save.isClicked) {
+    if (currentUser.ID != 0)
+      currentUser.saveData(database, username.input, Integer.parseInt(money.text));
+    money.isClicked = false;
+  }
 }
 
 void keyPressed() {
-  if (keyCode != SHIFT && keyCode != ALT) {
-    for (InputField i : inputFields) {
-      i.addInput(key);
+  for (Field f : fields)
+    if (f instanceof InputField) {
+      InputField i = (InputField)f;
+      i.addInput(key, keyCode);
     }
-    if (keyCode == BACKSPACE ) {
-      for (InputField i : inputFields) {
-        if (i.isClicked) {
-          i.removeInput();
-        }
-      }
-    }
-  }
-}
-
-void login() {
 }
 
 void addAccount(String username, String password, String email) {
-  if (database.connect()) {
-    database.query("INSERT INTO User (ID,Name,Mail,Pass) VALUES ( '35','"+username+"','"+email+"', '"+password+"');");
-  } else {
+  if (database.connect())
+    database.query("INSERT INTO User (Name,Mail,Pass) VALUES ('"+username+"','"+email+"', '"+password+"');");
+  else {
     println("Database failed to connect");
+    return;
   }
 }
 
-void getData() {
-  if (database.connect()) {
+boolean isMailUnique() {
+  if (database.connect())
     database.query("SELECT ID, Name, Mail, Pass FROM User");
-
-    while (database.next()) {
-      println(
-        "ID: " + database.getInt("ID") + 
-        ", \t Name: " + database.getString("Name") + 
-        ", \t Mail: " + database.getString("Mail") + 
-        ", \t Password: " + database.getString("Pass")
-        );
-    }
-  } else {
+  else {
     println("Database failed to connect");
+    return false;
+  }
+
+  while (database.next())
+    if (mail.input.equals(database.getString("Mail"))) {
+      println("Email is already in use");
+      return false;
+    }
+
+  return true;
+}
+
+boolean login() {
+  if (database.connect())
+    database.query("SELECT ID, Name, Mail, Pass FROM User");
+  else {
+    println("Database failed to connect");
+    return false;
+  }
+
+  while (true) {
+    if (database.next()) {
+      if (mail.input.equals(database.getString("Mail")))
+        break;
+      else
+        continue;
+    }
+    println("Email is incorrect");
+    return false;
+  }
+  if (!password.input.equals(database.getString("Pass"))) {
+    println("Password is incorrect");
+    return false;
+  }
+
+  currentUser.getData(database, database.getInt("ID"));
+  updateData();
+  return true;
+}
+
+void updateData() {
+  username.input = currentUser.name;
+  mail.input = currentUser.mail;
+  money.text = String.valueOf(currentUser.money);
+}
+
+void getAllData() {
+  if (database.connect())
+    database.query("SELECT ID, Name, Mail, Pass, Money FROM User");
+  else {
+    println("Database failed to connect");
+    return;
+  }
+
+  while (database.next()) {
+    println(
+      "ID: " + database.getInt("ID") + 
+      ", \t Name: " + database.getString("Name") + 
+      ", \t Mail: " + database.getString("Mail") + 
+      ", \t Password: " + database.getString("Pass") +
+      ", \t Balance: " + database.getInt("Money")
+      );
   }
 }

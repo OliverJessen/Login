@@ -1,15 +1,14 @@
 class Field {
-  
+
   PVector pos;
   PVector size;
   color col;
   String text;
   int textSize;
-  
+
   Field() {
-    
   }
-  
+
   Field(PVector pos, PVector size, color col, String text, int textSize) {
     this.pos = pos;
     this.size = size;
@@ -17,11 +16,11 @@ class Field {
     this.text = text;
     this.textSize = textSize;
   }
-  
+
   void display() {
     display(col, text);
   }
-  
+
   void display(color col, String text) {
     stroke(0);
     fill(col);

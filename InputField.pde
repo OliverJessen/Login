@@ -2,43 +2,60 @@ class InputField extends ButtonField {
   // Konstroktør
   // if statment
 
+  String input = "";
+  boolean isSecret = false;
+
   InputField(PVector pos, PVector size, color col, String text, int textSize, color colClicked) {
     super(pos, size, col, text, textSize, colClicked);
   }
 
-  String input = "";
+  InputField(PVector pos, PVector size, color col, String text, int textSize, color colClicked, boolean isSecret) {
+    super(pos, size, col, text, textSize, colClicked);
+    this.isSecret = isSecret;
+  }
 
   void display() {
-    println(input);
     color col;
     String text;
-    
-    if(input == "")
+
+    if (input.length() == 0 || input == null)
       text = this.text;
     else
-      text = input;
-      
-    if(isClicked)
-      col = colClicked;
-    else
-      col = this.col;
+      if (isSecret) text = getCensoredText(input);
+      else          text = input;
+
+    if (isClicked) col = colClicked;
+    else col = this.col;
+    
     super.display(col, text);
   }
 
-  void addInput(char c) {
-    
+  String getCensoredText(String input) {
+    String text = "";
+    for (int i = 0; i < input.length(); i++)
+      text += "*";
+    return text;
+  }
+
+  void addInput(char letter, int code) { //Marcus: Letter er det tegn (key), som skal lægges til inputtet, og code er keyboard-knappens kode (keyCode), som bruges til at tjekke, at man ikke har trykket på invalide knapper såsom CONTROL, CAPSLOCK, ALT osv.
     if (isClicked) {
-      if(c != BACKSPACE || c != SHIFT)
-        input += c;
-      if(c == BACKSPACE)
+      if (code != BACKSPACE &&
+        code != TAB &&
+        code != ENTER &&
+        code != RETURN &&
+        code != SHIFT &&
+        code != CONTROL &&
+        code != ALT &&
+        code != LEFT &&
+        code != RIGHT &&
+        code != UP &&
+        code != DOWN &&
+        code != 20 //Dette er koden for CAPSLOCK
+        )
+        input += letter;
+      if (code == BACKSPACE)
         removeInput();
     }
-    input.replace("AltGr","");
-   /*for(int i = 0;i<=input.length();i++){
-      if(input.charAt(i) == '?'){
-        input.replace(charAt(i),"");
-      }
-    }*/
   }
 
   void removeInput() {
