@@ -10,6 +10,7 @@ ButtonField login;
 
 void setup() {
   size(1000, 500);
+    background(30,30,40,40);
   inputFields.add(new InputField(new PVector(200, 150), new PVector(270, 50), color(255), "Username", 25, color(200)));
   inputFields.add(new InputField(new PVector(200, 205), new PVector(270, 50), color(255), "Password", 25, color(200)));
   inputFields.add(new InputField(new PVector(200, 260), new PVector(270, 50), color(255), "Email", 25, color(200)));
@@ -21,6 +22,7 @@ void setup() {
 }
 
 void draw() {
+  clear();
   createAccount.display();
   login.display();
 
